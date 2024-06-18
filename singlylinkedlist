@@ -1,0 +1,186 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+int e;
+struct node*next;};
+typedef struct node Node;
+int isempty(Node * list)
+{
+if(list->next==NULL)
+    return 1;
+else
+	return 0;
+}
+void display(Node*list)
+{
+	Node * position=list;
+	if(!isempty(list)){
+	printf("elements are-\n");
+	while(position->next!=NULL)
+	{
+		position=position->next;
+		printf("%d ",position->e);
+	}
+	printf("\n");
+	}
+ else
+ {
+ 	printf("list is empty");
+ }
+}
+Node *findnext(Node * list,int x)
+   {
+	if(isempty(list))
+	{
+	printf("list is empty\n");
+	return NULL;
+	}
+	else{
+	Node * position=list->next;
+	while(position!=NULL)
+	{
+	if(position->e==x)
+	{break;}	
+	position=position->next;
+	}
+	if(position!=NULL)
+	{return position;}
+	else
+	{  printf("element not found \n");
+	   return NULL;
+	}
+   }
+ }
+Node *findprev(Node * list,int x)
+   {
+	if(isempty(list))
+	{
+	printf("list is empty\n");
+	return NULL;
+	}
+	else{
+	Node * position=list->next;
+	while(position!=NULL)
+	{
+	if(position->next->e==x)
+	{break;}	
+	position=position->next;
+	}
+	if(position!=NULL)
+	{return position;}
+	else
+	{  printf("element not found \n");
+	   return NULL;
+  }
+ }
+}
+void insbeg(Node * list,int x)
+{	
+ Node * newnode;
+ newnode=malloc(sizeof(Node));
+ newnode->e=x;
+ newnode->next=list->next;
+ list->next=newnode;
+}
+void insmid(Node * list,int x)
+{
+ int p;	
+ Node * newnode;
+ Node * position;
+ position=list;
+ newnode=malloc(sizeof(Node));
+ newnode->e=x;
+ printf("after which element should be inserted: ");
+ scanf("%d",&p);
+ position=findnext(list,p);
+ if(position!=NULL)
+ {
+ newnode->next=position->next;
+ position->next=newnode;
+ }	
+}
+void inslast(Node * list,int x)
+{	
+ Node * newnode;
+ Node * position;
+ position=list;
+ newnode=malloc(sizeof(Node));
+ newnode->e=x;
+ while(position->next!=NULL)
+	{
+	  position=position->next;
+	}
+ newnode->next=position->next;
+ position->next=newnode;	
+}
+void delbeg(Node *list)
+{
+	Node*position;
+	int x,p;
+	position=list;
+	list->next=position->next->next;
+void delmid(Node *list)
+{
+	if(!isempty(list))
+	{
+	Node*position;
+	int p;
+	position=list;
+	printf("which element should be deleted ? ");
+	scanf("%d",&p);
+	position=findprev(list,p);
+	position->next=position->next->next;
+	}
+}
+void dellast(Node *list)
+{
+	if(!isempty(list))
+	{
+	Node*position;
+	position=list;
+	while(position->next->next!=NULL)
+	{position=position->next;}
+	 position->next=position->next->next;
+  }
+int main()
+{
+int opt;
+Node *list;
+list=malloc(sizeof(Node));
+list->next=NULL;
+while(1){
+printf("1.insert begining\n2.insert middle\n3.insert end\n4.delete begining\n5.delete middle\n6.delete last\n7.exit\n");
+scanf("%d",&opt);
+switch(opt)
+  {
+case 1: printf("element to be inserted: \n");
+        scanf("%d",&x);
+        insbeg(list,x);
+        display(list);
+        break;
+case 2: printf("element to be inserted: \n");
+        scanf("%d",&x);
+        insmid(list,x);
+        display(list);
+        break;
+case 3: printf("element to be inserted: \n");
+        scanf("%d",&x);
+        inslast(list,x);
+        display(list);
+        break;				
+case 4: delbeg(list);
+        display(list);
+        break;
+case 5:delmid(list);
+		display(list);
+		break;
+case 6:dellast(list);
+		display(list);
+		break;
+case 7: exit(0);
+default:printf("invalid input");
+        break;
+  }
+ }
+}
