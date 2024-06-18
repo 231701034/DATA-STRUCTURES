@@ -1,0 +1,80 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int element;
+    struct node* prev;
+};
+typedef struct node Node;
+Node*top;
+void display()
+{
+    Node * position;
+    position=top;
+    if(position->prev==NULL)
+    {
+        printf("The stack is empty!!\n");
+    }
+    else
+    {
+        while(position->prev!=NULL)
+        {
+            printf("%d\n",position->element);
+            position=position->prev;
+        }
+    }
+}
+void push()
+{
+    Node*newnode;
+    newnode=malloc(sizeof(Node));
+    printf("element to be inserted: ");
+    scanf("%d",&newnode->element);
+    newnode->prev=top;
+    top=newnode;
+
+}
+void pop()
+{
+   if(top->prev==NULL)
+   {
+    printf("stack is underflow\n");
+   }
+   else
+   {
+    top=top->prev;
+   }
+}
+void Top()
+{
+   if(top->prev==NULL)
+   {
+    printf("stack is underflow\n");
+   }
+   else
+   {
+    printf("top is: %d\n",top->element);
+   }
+}
+int main()
+{
+   int ch;
+   top=malloc(sizeof(Node));
+   top->prev=NULL;
+   while(1){
+    printf("1.push an element\n2.pop an element\n3.exit\n");
+	scanf("%d",&ch);
+	switch(ch)
+	{
+		case 1:push();
+		       display();
+		       break;
+		case 2:pop();
+		       display();
+		       break;       				
+		case 3:exit(0);
+		default:printf("invalid");
+		        break;
+	}
+   }
+}
